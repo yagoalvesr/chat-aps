@@ -1,0 +1,132 @@
+<!-- <button type="button" (click)="showModalDialog()" pButton icon="pi pi-external-link" label="Show"></button> -->
+<p-dialog header="Informe a senha da Sala: " [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+  <input type="password" pPassword [(ngModel)]="senha" />
+  <span class="senha-incorreta" *ngIf="senhaIncorreta">Senha Incorreta</span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="validarSenha(senha)" label="Entrar"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="sair()" label="Sair"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<div [style]="{width: '90%'}">
+
+  <div class="ui-g">
+
+    <div class="position-fixed top-1">
+
+      <div class="ui-g-6">
+
+        <p-dropdown [style]="{width: '100%'}" [options]="salas" [(ngModel)]="sala" placeholder="Selecione uma Sala"
+          optionLabel="nome" [showClear]="true"></p-dropdown>
+
+      </div>
+      <div class="ui-g-4 ">
+
+        <button class="botao-entrar" (click)="entrar()">Entrar na Sala</button>
+
+      </div>
+
+      <div class=" ui-g-6 ">
+
+        <div class=" ui-inputgroup">
+
+          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <input [style]="{width: '100%'}" [(ngModel)]="usuario" type="text" pInputText placeholder="Username">
+
+        </div>
+
+      </div>
+      <div class="ui-g-4 ">
+
+        <button class="botao-sair" (click)="sair()">Sair da Sala</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="ui-g">
+
+    <div class="ui-g-12 panelStyle">
+
+      <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+
+        <div class="mensagem" *ngFor="let mensagem of listMensagem">
+
+          <b class="usuario">{{mensagem.usuario}}:</b>
+          <div [innerHTML]="mensagem.mensagem"></div>
+
+        </div>
+
+      </p-scrollPanel>
+
+    </div>
+
+  </div>
+
+  <div class="position-fixed bottom-2">
+
+    <div class="ui-g">
+
+      <div class="ui-g-2 padding-4 usuario-logado">
+        <span *ngIf="usuarioLogado">Usuário: {{usuarioLogado}}</span>
+      </div>
+
+      <div class="ui-g-8">
+
+        <p-editor [(ngModel)]="textoMensagem" [style]="{width: '100%', height: '65px'}">
+
+          <p-header>
+
+            <div class="quill-wrapper">
+
+              <div id="toolbar-toolbar" class="toolbar ql-toolbar ql-snow">
+
+                <span class="ql-formats">
+                  <button class="ql-bold" type="button"></button>
+                  <button class="ql-italic" type="button"></button>
+                  <button class="ql-underline" type="button"></button>
+                  <button class="ql-strike" type="button"></button>
+                </span>
+
+                <span class="ql-formats">
+                  <button class="ql-list" value="ordered" type="button"></button>
+                  <button class="ql-list" value="bullet" type="button"></button>
+                </span>
+
+                <span class="ql-formats">
+                  <button class="ql-link" type="button"></button>
+                  <button class="ql-image" type="button"></button>
+                </span>
+
+                <span class="ql-formats">
+                  <button class="ql-clean"></button>
+                </span>
+
+              </div>
+
+            </div>
+
+          </p-header>
+          <p-scrollPanel>
+
+
+          </p-scrollPanel>
+        </p-editor>
+
+      </div>
+
+      <div class="ui-g-2 padding-2">
+
+        <button class="botao-enviar" (click)="enviar()">Enviar
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+</div>

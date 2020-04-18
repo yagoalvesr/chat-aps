@@ -1,0 +1,141 @@
+span {
+  white-space: nowrap;
+}
+
+.position-fixed {
+  position: fixed;
+  right: 0px;
+  left: 0px;
+}
+
+.top-1 {
+  top: 1%;
+}
+
+.top-23 {
+  top: 23%;
+}
+
+.bottom-1 {
+  bottom: 1%;
+}
+
+.bottom-2 {
+  bottom: 2%;
+}
+
+.bottom-5 {
+  bottom: 5%;
+}
+
+.bottom-23 {
+  bottom: 23%;
+}
+
+.padding-4 {
+  padding-top: 4%;
+}
+
+.padding-2 {
+  padding-top: 2%;
+}
+
+.border-gray {
+  border: 1px solid;
+  border-color: rgb(137, 143, 148);
+  height: 200px;
+  width: 95%;
+  height: 200px;
+  position: fixed;
+  bottom: 25%;
+}
+
+.ui-scrollpanel .ui-widget .ui-widget-content .ui-corner-all {
+  border: 1px solid;
+  border-color: rgb(137, 143, 148);
+  height: 200px;
+  width: 95%;
+  height: 200px;
+  position: fixed;
+  bottom: 25%;
+}
+
+.panelStyle {
+  width: 100%;
+  background-color: rgba(215, 220, 245, 0.301);
+  height: 55%;
+  position: fixed;
+  top: 19%;
+}
+
+.mensagem {
+  border-color: rgb(208, 212, 236) !important;
+  background-color: white;
+  border: 0.8px solid;
+  margin-bottom: 20px !important;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-bottom: 20px;
+}
+
+.usuario {
+  font-size: 16px;
+  color: rgb(125, 128, 150) !important;
+}
+
+.usuario-logado {
+  font-size: 16px;
+  color: rgb(146, 141, 190) !important;
+}
+
+.botao-enviar {
+  height: 70%;
+  width: 80%;
+  background: rgb(38, 115, 231);
+  color: white;
+  font-size: 17px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.botao-entrar {
+  height: 70%;
+  width: 40%;
+  background: rgb(80, 179, 60);
+  color: white;
+  font-size: 14px;
+  border-radius: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.botao-sair {
+  height: 70%;
+  width: 40%;
+  background: rgb(233, 102, 102);
+  color: white;
+  font-size: 14px;
+  border-radius: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.ui-button-raised .ui-button-secondary {
+  display: none;
+}
+
+.senha-incorreta {
+  padding-left: 10px;
+  color: rgb(202, 95, 95);
+}
+
+:host ::ng-deep .ui-button {
+  margin: 0.5em 0.5em 0.5em 0;
+  width: 140px;
+}
+
+@media screen and (max-width: 40em) {
+  :host ::ng-deep .ui-dialog {
+    width: 75vw !important;
+  }
+}
