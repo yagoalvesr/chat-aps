@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {MensagemModel} from '../models/mensagem-model';
 import {SalaModel} from '../models/sala-model';
@@ -17,6 +17,8 @@ export class ChatComponent implements OnInit {
   mensagem: MensagemModel = new MensagemModel();
   data: DataModel = new DataModel();
   sala: SalaModel;
+
+  @ViewChild('myList') myList;
 
   listMensagem: Array<MensagemModel> = [];
   usuarioList: Array<UsuarioModel> = [];
@@ -56,6 +58,7 @@ export class ChatComponent implements OnInit {
 
   enviar() {
 
+    this.textoMensagem = this.textoMensagem.replace('<br>', '');
     this.data.mensagem = this.textoMensagem;
 
     this.chatService.enviarMensagem(this.data);
@@ -83,6 +86,7 @@ export class ChatComponent implements OnInit {
     mensagemTemp.mensagem = data.mensagem;
 
     this.listMensagem.push(mensagemTemp);
+
   }
 
   carregarListaUsuarios(usuariosMap) {
@@ -124,6 +128,15 @@ export class ChatComponent implements OnInit {
     });
 
     this.usuarioList = novaLista;
+  }
+
+  public sair() {
+    // this.chatService.sairSala(this.data);
+    window.location.reload();
+  }
+
+  public scrollToBottom() {
+    this.myList.nativeElement.scrollTop = this.myList.nativeElement.scrollHeight;
   }
 
 }

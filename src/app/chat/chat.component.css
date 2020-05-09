@@ -465,6 +465,16 @@ span {
   color: #898989;
 }
 
+.ui-button {
+  background-color: #a75454 !important;
+  border-color: #a75454 !important;
+}
+
+.ui-button:hover {
+  background-color: #903f3f !important;
+  border-color: #903f3f !important;
+}
+
 @media screen and (max-width: 700px) {
   .app {
     top: 0;

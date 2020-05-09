@@ -16,10 +16,8 @@ export class AppComponent {
   beforeUnloadHandler() {
 
     const data = this.chatService.data;
-
     this.chatService.sairSala(data);
 
-    alert('teste');
   }
 }
 

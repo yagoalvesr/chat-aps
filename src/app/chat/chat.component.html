@@ -41,18 +41,19 @@
         </div>
       </div>
 
-      <div class="row message" id="conversation">
+      <div #myList class="row message" id="conversation">
 
         <div class="message-text">
-          <div class="mensagem" *ngFor="let m of listMensagem">
+          <div class="mensagem" *ngFor="let m of listMensagem, let last = last">
             <span class="mensagem-usuario">{{m.usuario}}:</span>
             <div [innerHTML]="m.mensagem"></div>
+            {{last ? scrollToBottom() : ''}}
           </div>
         </div>
 
       </div>
 
-      <div class="row reply" (keyup.enter)="enviar()">
+      <div class="row reply" (keydown.enter)="enviar()">
         <div class="col-sm-11 col-xs-9">
           <p-editor [(ngModel)]="textoMensagem">
 
@@ -94,6 +95,7 @@
 
           </p-editor>
         </div>
+        <button pButton type="button" label="Sair" class="ui-button-rounded ui-button-danger" (click)="sair()"></button>
       </div>
     </div>
   </div>

@@ -41,31 +41,15 @@ export class LoginComponent implements OnInit {
 
     this.chatService.receberListaUsuarioParaValidacao().subscribe((mapListaUsuario) => {
 
-      console.log('login component', mapListaUsuario);
-
       this.nomeEmUso = false;
-
       mapListaUsuario.forEach(value => {
-
-        console.log('value', value);
-        console.log('usuarioLogado', this.usuario);
-        console.log('value === usuarioLogado', value === this.usuarioLogado);
-
         if (value === this.usuario) {
-          console.log('ENTROU if value === usuarioLogado');
           this.nomeEmUso = true;
         }
-
       });
-
-      console.log('nomeEmUso', this.nomeEmUso);
       if (!this.nomeEmUso) {
-        console.log('ENTROU entrarSala');
-
         this.entrar();
-
       }
-
     });
   }
 

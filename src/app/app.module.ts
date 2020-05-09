@@ -8,12 +8,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import { LoginModule } from './login/login.module';
-import { CloseWindowCatcherDirective } from './directives/close-window-catcher.directive';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CloseWindowCatcherDirective,
+    AppComponent
   ],
   imports: [
     BrowserModule,

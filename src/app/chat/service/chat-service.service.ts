@@ -11,13 +11,13 @@ import {DataModel} from 'src/app/models/data-model';
 export class ChatService {
 
   private url = 'https://chat-aps-service.herokuapp.com/';
+  // private url = 'http://localhost:3000';
   private socket;
   data: DataModel;
 
   constructor() {
     this.socket = io(this.url);
   }
-
 
   novoUsarioEntrou() {
     const observable = new Observable<any>(observer => {
