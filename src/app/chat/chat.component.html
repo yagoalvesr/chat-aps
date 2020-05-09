@@ -1,132 +1,100 @@
-<!-- <button type="button" (click)="showModalDialog()" pButton icon="pi pi-external-link" label="Show"></button> -->
-<p-dialog header="Informe a senha da Sala: " [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
-  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<div class="container app">
+  <div class="row app-one">
+    <div class="col-sm-4 side">
+      <div class="side-one">
 
-  <input type="password" pPassword [(ngModel)]="senha" />
-  <span class="senha-incorreta" *ngIf="senhaIncorreta">Senha Incorreta</span>
-  <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="validarSenha(senha)" label="Entrar"></button>
-    <button type="button" pButton icon="pi pi-times" (click)="sair()" label="Sair"
-      class="ui-button-secondary"></button>
-  </p-footer>
-</p-dialog>
+        <div class="row sideBar">
 
-<div [style]="{width: '90%'}">
+          <div class="row sideBar-body">
+            <div class="col-sm-3 col-xs-3 sideBar-avatar">
+              <div class="avatar-icon">
+                <!-- <img src="https://bootdey.com/img/Content/avatar/avatar2.png"> -->
+              </div>
+            </div>
+            <div class="col-sm-9 col-xs-9 sideBar-main">
+              <div class="row">
+                <div class="col-sm-8 col-xs-8 sideBar-name">
+                  <div class="name-list" *ngFor="let usuario of usuarioList">
+                    <span class="name-meta">
+                      <img class="user-online" src="../../assets/icons/online-user.png"/>
+                      {{usuario.usuario}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <div class="ui-g">
-
-    <div class="position-fixed top-1">
-
-      <div class="ui-g-6">
-
-        <p-dropdown [style]="{width: '100%'}" [options]="salas" [(ngModel)]="sala" placeholder="Selecione uma Sala"
-          optionLabel="nome" [showClear]="true"></p-dropdown>
-
+        </div>
       </div>
-      <div class="ui-g-4 ">
 
-        <button class="botao-entrar" (click)="entrar()">Entrar na Sala</button>
+      <div class="side-two">
+      </div>
+    </div>
 
+    <div class="col-sm-8 conversation">
+      <div class="row heading">
+        <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+        </div>
+        <div class="col-sm-8 col-xs-7 heading-name">
+          <span *ngIf="data" class="heading-name-meta">{{data.sala.nome}}</span>
+        </div>
       </div>
 
-      <div class=" ui-g-6 ">
+      <div class="row message" id="conversation">
 
-        <div class=" ui-inputgroup">
-
-          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
-          <input [style]="{width: '100%'}" [(ngModel)]="usuario" type="text" pInputText placeholder="Username">
-
+        <div class="message-text">
+          <div class="mensagem" *ngFor="let m of listMensagem">
+            <span class="mensagem-usuario">{{m.usuario}}:</span>
+            <div [innerHTML]="m.mensagem"></div>
+          </div>
         </div>
 
       </div>
-      <div class="ui-g-4 ">
 
-        <button class="botao-sair" (click)="sair()">Sair da Sala</button>
+      <div class="row reply" (keyup.enter)="enviar()">
+        <div class="col-sm-11 col-xs-9">
+          <p-editor [(ngModel)]="textoMensagem">
 
-      </div>
+            <p-header>
 
-    </div>
+              <div class="quill-wrapper">
 
-  </div>
+                <div id="toolbar-toolbar" class="toolbar ql-toolbar ql-snow">
 
-  <div class="ui-g">
+                  <span class="ql-formats">
+                    <button class="ql-bold" type="button"></button>
+                    <button class="ql-italic" type="button"></button>
+                    <button class="ql-underline" type="button"></button>
+                    <button class="ql-strike" type="button"></button>
+                  </span>
 
-    <div class="ui-g-12 panelStyle">
+                  <span class="ql-formats">
+                    <button class="ql-list" value="ordered" type="button"></button>
+                    <button class="ql-list" value="bullet" type="button"></button>
+                  </span>
 
-      <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+                  <span class="ql-formats">
+                    <button class="ql-link" type="button"></button>
+                    <button class="ql-image" type="button"></button>
+                  </span>
 
-        <div class="mensagem" *ngFor="let mensagem of listMensagem">
+                  <span class="ql-formats">
+                    <div class="col-sm-1 col-xs-1 reply-send" >
+                      <i class="fa fa-send fa-2x" aria-hidden="true" (click)="enviar()" ></i>
+                    </div>
+                  </span>
 
-          <b class="usuario">{{mensagem.usuario}}:</b>
-          <div [innerHTML]="mensagem.mensagem"></div>
-
-        </div>
-
-      </p-scrollPanel>
-
-    </div>
-
-  </div>
-
-  <div class="position-fixed bottom-2">
-
-    <div class="ui-g">
-
-      <div class="ui-g-2 padding-4 usuario-logado">
-        <span *ngIf="usuarioLogado">Usuário: {{usuarioLogado}}</span>
-      </div>
-
-      <div class="ui-g-8">
-
-        <p-editor [(ngModel)]="textoMensagem" [style]="{width: '100%', height: '65px'}">
-
-          <p-header>
-
-            <div class="quill-wrapper">
-
-              <div id="toolbar-toolbar" class="toolbar ql-toolbar ql-snow">
-
-                <span class="ql-formats">
-                  <button class="ql-bold" type="button"></button>
-                  <button class="ql-italic" type="button"></button>
-                  <button class="ql-underline" type="button"></button>
-                  <button class="ql-strike" type="button"></button>
-                </span>
-
-                <span class="ql-formats">
-                  <button class="ql-list" value="ordered" type="button"></button>
-                  <button class="ql-list" value="bullet" type="button"></button>
-                </span>
-
-                <span class="ql-formats">
-                  <button class="ql-link" type="button"></button>
-                  <button class="ql-image" type="button"></button>
-                </span>
-
-                <span class="ql-formats">
-                  <button class="ql-clean"></button>
-                </span>
+                </div>
 
               </div>
 
-            </div>
+            </p-header>
+            <textarea class="form-control" rows="1" id="comment" [(ngModel)]="textoMensagem" ></textarea>
 
-          </p-header>
-          <p-scrollPanel>
-
-
-          </p-scrollPanel>
-        </p-editor>
-
-      </div>
-
-      <div class="ui-g-2 padding-2">
-
-        <button class="botao-enviar" (click)="enviar()">Enviar
-        </button>
-
+          </p-editor>
+        </div>
       </div>
     </div>
   </div>
-
 </div>

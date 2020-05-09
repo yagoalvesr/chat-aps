@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ChatService } from './service/chat-service.service';
-import { SelectItem } from 'primeng/api';
-import { MensagemModel } from '../models/mensagem-model';
-import { SalaModel } from '../models/sala-model';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {MensagemModel} from '../models/mensagem-model';
+import {SalaModel} from '../models/sala-model';
+import {ChatService} from './service/chat-service.service';
+import {DataModel} from '../models/data-model';
+import {UsuarioModel} from '../models/usuario-model';
+import {LoginService} from '../login/service/login.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,109 +14,119 @@ import { SalaModel } from '../models/sala-model';
 })
 export class ChatComponent implements OnInit {
 
-  mensagem: MensagemModel;
-
-  salas: Array<SalaModel> = [];
-
-  listMensagem: Array<any> = [];
-
-  usuario: string;
-  usuarioLogado: string;
+  mensagem: MensagemModel = new MensagemModel();
+  data: DataModel = new DataModel();
   sala: SalaModel;
+
+  listMensagem: Array<MensagemModel> = [];
+  usuarioList: Array<UsuarioModel> = [];
+
+  usuarioLogado: UsuarioModel = new UsuarioModel();
   textoMensagem: string;
 
-  senhaSala: string;
-  senha: string;
-  senhaIncorreta: boolean;
-  senhaValida: boolean;
-
-  displayModal: boolean;
-
-  displayBasic: boolean;
-
-  constructor(private chatService: ChatService) {
-    this.senhaSala = '123';
+  constructor(private chatService: ChatService, private router: Router, private loginService: LoginService) {
   }
 
   ngOnInit() {
     this.textoMensagem = ' ';
 
-    this.salas.push(
-      { nome: 'Secretaria do Estado do Meio Ambiente', code: 1 },
-      { nome: 'Secretaria do Estado do Educação', code: 2 }
-    );
+    this.data = this.chatService.data;
+
+    this.verificarUsuarioLogado();
 
     this.chatService.novoUsarioEntrou().subscribe((data) => {
-      this.listMensagem.push(data);
+      this.inserirMensagem(data);
     });
 
     this.chatService.usuarioSaiu().subscribe((data) => {
-      this.listMensagem.push(data);
+      this.removerDaListaUsuario(data);
+      this.inserirMensagem(data);
+
     });
 
     this.chatService.mensagemEnviada().subscribe((data) => {
-      data.usuario = data.usuario + ' disse';
-      this.listMensagem.push(data);
+      this.inserirMensagem(data);
     });
-  }
 
-  validarSenha(senha: string) {
-    if (this.senhaSala === senha) {
-      this.displayModal = false;
-      this.senhaValida = true;
+    this.chatService.receberListaUsuarios().subscribe((usuariosMap) => {
+      this.carregarListaUsuarios(usuariosMap);
+    });
 
-      let data = {
-        usuario: this.usuarioLogado,
-        sala: this.sala.code,
-      };
-
-      this.chatService.entrouSala(data);
-    } else {
-      this.senhaIncorreta = true;
-    }
-  }
-
-  entrar() {
-    this.usuarioLogado = this.usuario;
-
-    console.log(this.usuario)
-
-    if (this.sala.code === 1) {
-      this.showModalDialog();
-    }
-
-    this.usuario = '';
-  }
-
-  sair() {
-    this.usuarioLogado = '';
-
-    let data = {
-      usuario: this.usuario,
-      sala: this.sala.code,
-    };
-    this.chatService.saiuSala(data);
-
-    window.location.reload();
   }
 
   enviar() {
-    let data = {
-      sala: this.sala.code,
-      usuario: this.usuarioLogado,
-      mensagem: this.textoMensagem,
-    };
-    this.chatService.enviarMensagem(data);
+
+    this.data.mensagem = this.textoMensagem;
+
+    this.chatService.enviarMensagem(this.data);
 
     this.textoMensagem = '';
   }
 
-  addEmoji(e) {
-    this.textoMensagem = this.textoMensagem + e.emoji.native;
+  verificarUsuarioLogado() {
+    if (!this.data) {
+      this.navigate();
+    } else {
+      this.carregarListaUsuariosFromServer(this.data.sala.code);
+    }
   }
 
-  showModalDialog() {
-    this.displayModal = true;
+  navigate() {
+    this.router.navigate(['/index']);
+  }
+
+  inserirMensagem(data) {
+
+    const mensagemTemp: MensagemModel = new MensagemModel();
+
+    mensagemTemp.usuario = data.usuario.usuario;
+    mensagemTemp.mensagem = data.mensagem;
+
+    this.listMensagem.push(mensagemTemp);
+  }
+
+  carregarListaUsuarios(usuariosMap) {
+
+    const listaUsuariosTemp = new Array<UsuarioModel>();
+
+    for (const [key, value] of usuariosMap) {
+
+      if (this.data) {
+        if (value === this.data.usuario.usuario) {
+          this.usuarioLogado.usuario = value;
+          this.usuarioLogado.code = key;
+          this.chatService.data.usuario.code = this.usuarioLogado.code;
+        }
+      }
+
+      if (value) {
+        const usuarioModel: UsuarioModel = new UsuarioModel();
+        usuarioModel.code = key;
+        usuarioModel.usuario = value;
+        listaUsuariosTemp.push(usuarioModel);
+      }
+    }
+
+    this.usuarioList = listaUsuariosTemp;
+
+  }
+
+  private carregarListaUsuariosFromServer(codigoSala) {
+    this.chatService.carregarListaUsuarios(codigoSala);
+  }
+
+  private removerDaListaUsuario(data: DataModel) {
+
+    const novaLista = this.usuarioList.filter((usuario) => {
+
+      return !(usuario.code === data.usuario.code);
+
+    });
+
+    this.usuarioList = novaLista;
   }
 
 }
+
+
+

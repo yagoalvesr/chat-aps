@@ -1,0 +1,44 @@
+<button [hidden]="true" type="button" (click)="showModalDialog()" pButton icon="pi pi-external-link" label="Show"></button>
+<p-dialog header="Informe a senha da Sala: " [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+          [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+  <input type="password" pPassword [(ngModel)]="senha"/>
+  <span class="senha-incorreta" *ngIf="senhaIncorreta">Senha Incorreta</span>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="validarSenha(senha)" label="Entrar"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="sair()" label="Sair" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<div class="wrap">
+  <form class="login-form" action="">
+    <div class="form-header">
+      <h3>Chat</h3>
+      <p>faça login para acessar uma sala de chat</p>
+    </div>
+    <!--Email Input-->
+    <div class="form-group">
+      <p-dropdown [style]="{width: '100%'}" [options]="salas" [(ngModel)]="sala" placeholder="Selecione uma Sala"
+                  optionLabel="nome" [showClear]="true" [ngModelOptions]="{standalone: true}"></p-dropdown>
+    </div>
+    <!--Password Input-->
+    <div class="form-group">
+      <!--      <input type="password" class="form-input" placeholder="password">-->
+      <div class=" ui-inputgroup">
+
+        <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+        <input [style]="{width: '100%'}" [(ngModel)]="usuario" type="text" pInputText placeholder="Username" [ngModelOptions]="{standalone: true}">
+
+      </div>
+    </div>
+    <!--Login Button-->
+    <div class="form-group">
+      <button class="form-button" (click)="validarUsuario()">Entrar</button>
+    </div>
+    <div class="form-footer">
+      <div class="nome-em-uso" *ngIf="nomeEmUso">
+        UserName já está em uso, escolha outro!
+      </div>
+    </div>
+  </form>
+</div>
