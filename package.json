@@ -7,9 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
-  "heroku-postbuild": "ng build --prod",
   "engines": {
     "node": "12.16.2",
     "npm": "6.13.4"
