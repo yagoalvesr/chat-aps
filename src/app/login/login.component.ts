@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
 
     this.salas.push(
       {nome: 'Secretaria do Estado do Meio Ambiente', code: 1},
-      {nome: 'Secretaria do Estado do Educação', code: 2}
     );
 
     this.chatService.receberListaUsuarioParaValidacao().subscribe((mapListaUsuario) => {

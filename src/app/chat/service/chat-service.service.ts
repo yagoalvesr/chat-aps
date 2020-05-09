@@ -10,7 +10,7 @@ import {DataModel} from 'src/app/models/data-model';
 
 export class ChatService {
 
-  private url = 'http://127.0.0.1:3000';
+  private url = 'https://chat-aps-service.herokuapp.com/';
   private socket;
   data: DataModel;
 
