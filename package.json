@@ -33,7 +33,7 @@
     "angular-emoji": "^0.1.45",
     "bootstrap": "^4.4.1",
     "eva-icons": "^1.1.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "path": "^0.12.7",
     "popper.js": "^1.16.1",
     "primeicons": "^2.0.0",
